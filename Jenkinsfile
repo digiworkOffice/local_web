@@ -10,16 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    def scmVars = checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/abishek07bimali/website.git']]])
-                    echo "Checked out 'master' branch"
+                    echo "Checked out 'dev' branch"
                 }
-            }
-        }
-
-        stage('Deploy to Local Server') {
-            steps {
-                // Remove existing files (optional)
-               
             }
         }
 

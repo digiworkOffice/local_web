@@ -56,5 +56,19 @@ pipeline {
                 """
            }
         }
+               
+        stage('dev4 Branch Deploy Code') {
+            when {
+                branch 'dev4'
+            }
+            steps {
+                sh """
+                echo "Building Artifact from dev4 branch"
+                """
+                sh """
+                echo "Deploying Code from dev4 branch"
+                """
+           }
+        }
     }
 }

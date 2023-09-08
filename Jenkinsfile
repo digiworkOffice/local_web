@@ -1,25 +1,60 @@
 pipeline {
     agent any
-
-    // Define the local server directory here at the top level
-    environment {
-        localServerDir = '/var/www/html/'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Master Branch Deploy Code') {
+            when {
+                branch 'master'
+            }
             steps {
-                script {
-                    echo "Checked out 'master' branch"
-                }
+                sh """
+                echo "Building Artifact from Master branch"
+                """
+ 
+                sh """
+                echo "Deploying Code from Master branch"
+                """
             }
         }
-
-    }
-
-    post {
-        always {
-            cleanWs()
+        stage('dev Branch Deploy Code') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                sh """
+                echo "Building Artifact from dev branch"
+                """
+                sh """
+                echo "Deploying Code from dev branch"
+                """
+           }
+        }
+               
+        stage('dev1 Branch Deploy Code') {
+            when {
+                branch 'dev1'
+            }
+            steps {
+                sh """
+                echo "Building Artifact from dev1 branch"
+                """
+                sh """
+                echo "Deploying Code from dev1 branch"
+                """
+           }
+        }
+                
+        stage('dev2 Branch Deploy Code') {
+            when {
+                branch 'dev2'
+            }
+            steps {
+                sh """
+                echo "Building Artifact from dev2 branch"
+                """
+                sh """
+                echo "Deploying Code from dev2 branch"
+                """
+           }
         }
     }
 }

@@ -1,60 +1,39 @@
+
+
 pipeline {
     agent any
+    environment {
+        localServerDir = '/home/digitech/jenkinsTest/frontend'
+        deployScript = './deploy.sh'
+    }
     stages {
-        stage('Master Branch Deploy Code') {
-            when {
-                branch 'master'
-            }
+
+        stage('deploy') {
             steps {
-                sh """
-                echo "Building Artifact from Master branch"
-                """
- 
-                sh """
-                echo "Deploying Code from Master branch"
-                """
+                script {
+                    // Create a temporary directory to hold the new deployment
+                    def tempDir = sh(
+                        script: "mktemp -d",
+                        returnStdout: true
+                    ).trim()
+
+                    // Copy the files to the temporary directory
+                    sh "cp -r * ${tempDir}"
+
+                    // Execute the deployment script
+                    sh "./deploy.sh ${tempDir} ${localServerDir}"
+
+                    echo "Deployment completed successfully"
+                    
+                     // Clean up the temporary directory
+                    sh "rm -rf ${tempDir}"
+                }
             }
         }
-        stage('dev Branch Deploy Code') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                sh """
-                echo "Building Artifact from dev branch"
-                """
-                sh """
-                echo "Deploying Code from dev branch"
-                """
-           }
-        }
-               
-        stage('dev1 Branch Deploy Code') {
-            when {
-                branch 'dev1'
-            }
-            steps {
-                sh """
-                echo "Building Artifact from dev1 branch"
-                """
-                sh """
-                echo "Deploying Code from dev1 branch"
-                """
-           }
-        }
-                
-        stage('dev2 Branch Deploy Code') {
-            when {
-                branch 'dev2'
-            }
-            steps {
-                sh """
-                echo "Building Artifact from dev2 branch"
-                """
-                sh """
-                echo "Deploying Code from dev2 branch"
-                """
-           }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }

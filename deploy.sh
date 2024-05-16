@@ -15,14 +15,14 @@ if [ -z "$SOURCE_DIR" ] || [ -z "$DESTINATION_DIR" ]; then
 fi
 
 # Check if the PM2 process is running
-PM2_STATUS=$(pm2 status | grep "api_expance")
+PM2_STATUS=$(pm2 status | grep "api_frontend")
 
 if [ -n "$PM2_STATUS" ]; then
     # PM2 process is running, reload it
     pm2 reload api_frontend
 else
     # PM2 process is not running, start it
-    pm2 start server.js --name api_frontend
+    pm2 start "$DESTINATION_DIR/server.js" --name api_frontend
 fi
 
 # Define folders to exclude from deletion

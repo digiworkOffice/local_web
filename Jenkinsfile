@@ -25,7 +25,7 @@ pipeline {
 
                     echo "Deployment completed successfully"
                     
-                    echo ${tempDir}
+                    echo "${tempDir}"
                      // Clean up the temporary directory
                     sh "rm -rf ${tempDir}"
                 }
